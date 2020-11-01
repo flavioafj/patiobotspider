@@ -215,9 +215,11 @@ class EstacionamentosSpider(scrapy.Spider):
             'Diária_Coberta': limpa_RS(response.css("body > div.page-builder > div > div > div.col-md-8 > div > blockquote:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(3)::text").get()),
             'Diária_Descoberta': limpa_RS(response.css("body > div.page-builder > div > div > div.col-md-8 > div > blockquote:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)::text").get()),
             'Semana_Coberta': limpa_RS(response.css("body > div.page-builder > div > div > div.col-md-8 > div > blockquote:nth-child(2) > table > tbody > tr:nth-child(8) > td:nth-child(3)::text").get()),
-            'Semana_Descoberta': limpa_RS(response.css("body > div.page-builder > div > div > div.col-md-8 > div > blockquote:nth-child(2) > table > tbody > tr:nth-child(8) > td:nth-child(2)::text").get())
-
+            'Semana_Descoberta': limpa_RS(response.css("body > div.page-builder > div > div > div.col-md-8 > div > blockquote:nth-child(2) > table > tbody > tr:nth-child(8) > td:nth-child(2)::text").get()),
+            'Última_atualização': x.strftime("%d") + "/" + x.strftime("%m") + "/" + x.strftime("%Y")
             }
+
+       
 
 
 
