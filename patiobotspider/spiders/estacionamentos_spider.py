@@ -56,7 +56,8 @@ class EstacionamentosSpider(scrapy.Spider):
             'logo': 'http://veloxpark.com.br/site-wp-vp/wp-content/themes/21-12-2018/img/logo-velox-park.png',
             'distância': '14 km',
             'Diária_Vaga_Coberta': limpa_RS(response.css("td.col-md-2::text")[0].get()),
-            'promoção': limpa_RS(response.css("td.col-md-2::text")[1].get())
+            'promoção': limpa_RS(response.css("td.col-md-2::text")[1].get()),
+            'url': response.url
             }
 
         
@@ -81,7 +82,8 @@ class EstacionamentosSpider(scrapy.Spider):
             'Diária_Coberta': limpa_RS(response.css("#et-boc > div > div.et_pb_section.et_pb_section_3.et_section_regular > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1.et_pb_css_mix_blend_mode_passthrough > div.et_pb_module.et_pb_text.et_pb_text_1.et_pb_bg_layout_light.et_pb_text_align_center > div > div > table > tbody > tr:nth-child(3) > td:nth-child(2)::text")[0].get()),
             'Diária_Descoberta': limpa_RS(response.css("#et-boc > div > div.et_pb_section.et_pb_section_3.et_section_regular > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1.et_pb_css_mix_blend_mode_passthrough > div.et_pb_module.et_pb_text.et_pb_text_1.et_pb_bg_layout_light.et_pb_text_align_center > div > div > table > tbody > tr:nth-child(2) > td:nth-child(2)::text").get()),
             'Semana_Coberta': limpa_RS(response.css('#et-boc > div > div.et_pb_section.et_pb_section_3.et_section_regular > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1.et_pb_css_mix_blend_mode_passthrough > div.et_pb_module.et_pb_text.et_pb_text_1.et_pb_bg_layout_light.et_pb_text_align_center > div > div > table > tbody > tr:nth-child(3) > td:nth-child(3)::text').get()),
-            'Semana_Descoberta': limpa_RS(response.css('#et-boc > div > div.et_pb_section.et_pb_section_3.et_section_regular > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1.et_pb_css_mix_blend_mode_passthrough > div.et_pb_module.et_pb_text.et_pb_text_1.et_pb_bg_layout_light.et_pb_text_align_center > div > div > table > tbody > tr:nth-child(2) > td:nth-child(3)::text').get())
+            'Semana_Descoberta': limpa_RS(response.css('#et-boc > div > div.et_pb_section.et_pb_section_3.et_section_regular > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1.et_pb_css_mix_blend_mode_passthrough > div.et_pb_module.et_pb_text.et_pb_text_1.et_pb_bg_layout_light.et_pb_text_align_center > div > div > table > tbody > tr:nth-child(2) > td:nth-child(3)::text').get()),
+            'url': response.url
 
             }
             
@@ -96,7 +98,8 @@ class EstacionamentosSpider(scrapy.Spider):
             'distância': '6,5 km',
             'Coberta': limpa_RS(response.css("#precos > div > div:nth-child(2) > div > div > span::text")[0].get()),
             'Semana': limpa_RS(response.css("#precos > div > div:nth-child(3) > div > div > span::text")[0].get()),
-            'Mensal': limpa_RS(response.css('#precos > div > div:nth-child(4) > div > div > span::text')[0].get())
+            'Mensal': limpa_RS(response.css('#precos > div > div:nth-child(4) > div > div > span::text')[0].get()),
+            'url': response.url
             }
 
 
@@ -109,7 +112,8 @@ class EstacionamentosSpider(scrapy.Spider):
             'logo': 'https://www.estacionamentospacepark.com.br/assets/img/logo.png',
             'distância': '3,6 km',
             'Coberta': limpa_RS(busca_preco_space(response.css(".lead.mb-5::text")[1].get())),
-            'Semana': limpa_RS(busca_preco_space(response.css(".lead.mb-5::text")[7].get()))
+            'Semana': limpa_RS(busca_preco_space(response.css(".lead.mb-5::text")[7].get())),
+            'url': response.url
             }
 
 
@@ -125,6 +129,7 @@ class EstacionamentosSpider(scrapy.Spider):
             #'Descoberta': busca_preco_space(response.css("#comp-js694zyj__item-j9sduzlb > h5:nth-child(1) > span > span > span:nth-child(2)::text")[0].get()),
             #'Semana_Coberta': busca_preco_space(response.css("#comp-js694zyj__item-js7xv1yr > h5:nth-child(3) > span:nth-child(1) > span > span::text").get()),
             #'Semana_Descoberta': busca_preco_space(response.css('#comp-js694zyj__item-js7xv1yr > h5:nth-child(2) > span > span > span:nth-child(2)::text').get())
+            'url': response.url
             
             }
 
@@ -142,12 +147,17 @@ class EstacionamentosSpider(scrapy.Spider):
          
 
         if response.url == "http://www.bpark.com.br/":
-
+            breakpoint
 
 
             yield {
             'nome': 'Bpark',
-            'tarifa': 'suspensão temporária das atividades'
+            'Coberta': busca_preco_space(response.css('#aba-3 > div.g-mb-20 > h5 > ul > li:nth-child(1)::text').get()),
+            'Semana': busca_preco_space(response.css('#aba-3 > div.g-mb-20 > h5 > ul > li:nth-child(2)::text').get()),
+            'Mensal': busca_preco_space(response.css('#aba-3 > div.g-mb-20 > h5 > ul > li:nth-child(3)::text').get()),
+            'logo': 'http://www.bpark.com.br/assets/img/logo.png',
+            'distância': '10,5 km',
+            'url': response.url
             }
 
 
@@ -163,14 +173,15 @@ class EstacionamentosSpider(scrapy.Spider):
             'Coberta': limpa_RS(response.css('.rich-content table:nth-child(10) tr:nth-child(2) td:nth-child(2)::text').get()),
             'Semana': limpa_RS(response.css('.rich-content table:nth-child(10) tr:nth-child(5) td:nth-child(2)::text').get()),
             'Mensal': limpa_RS(response.css('.rich-content table:nth-child(10) tr:nth-child(6) td:nth-child(2)::text').get()),
-            'promoção': (limpa_RS(response.css("section:nth-of-type(2) .section-content .rich-content table tbody tr:nth-child(2) td:nth-child(2)::text").get()),
-                         limpa_RS(response.css("section:nth-of-type(2) .section-content .rich-content table tbody tr:nth-child(3) td:nth-child(2)::text").get()),
-                         limpa_RS(response.css("section:nth-of-type(2) .section-content .rich-content table tbody tr:nth-child(4) td:nth-child(2)::text").get()),
-                         limpa_RS(response.css("section:nth-of-type(2) .section-content .rich-content table tbody tr:nth-child(5) td:nth-child(2)::text").get()),
-                         limpa_RS(response.css("section:nth-of-type(2) .section-content .rich-content table tbody tr:nth-child(6) td:nth-child(2)::text").get()),
-                         limpa_RS(response.css("section:nth-of-type(2) .section-content .rich-content table tbody tr:nth-child(7) td:nth-child(2)::text").get()),
-                         limpa_RS(response.css("section:nth-of-type(2) .section-content .rich-content table tbody tr:nth-child(8) td:nth-child(2)::text").get()),
-                         limpa_RS(response.css("section:nth-of-type(2) .section-content .rich-content table tbody tr:nth-child(9) td:nth-child(2)::text").get()))
+            'promoção': (limpa_RS(response.css(".section-content .rich-content table tbody tr:nth-child(2) td:nth-child(2)::text").get()),
+                         limpa_RS(response.css(".section-content .rich-content table tbody tr:nth-child(3) td:nth-child(2)::text").get()),
+                         limpa_RS(response.css(".section-content .rich-content table tbody tr:nth-child(4) td:nth-child(2)::text").get()),
+                         limpa_RS(response.css(".section-content .rich-content table tbody tr:nth-child(5) td:nth-child(2)::text").get()),
+                         limpa_RS(response.css(".section-content .rich-content table tbody tr:nth-child(6) td:nth-child(2)::text").get()),
+                         limpa_RS(response.css(".section-content .rich-content table tbody tr:nth-child(7) td:nth-child(2)::text").get()),
+                         limpa_RS(response.css(".section-content .rich-content table tbody tr:nth-child(8) td:nth-child(2)::text").get()),
+                         limpa_RS(response.css(".section-content .rich-content table tbody tr:nth-child(9) td:nth-child(2)::text").get())),
+            'url': response.url
        
             }
 
@@ -186,6 +197,7 @@ class EstacionamentosSpider(scrapy.Spider):
             'distância': '13,5 km',
             'tarifa': limpa_RS(response.css("body section:nth-child(5) div div:nth-child(2) div:nth-child(1) table tbody tr td::text").get()),
             'promoção': limpa_RS(response.css("body section:nth-child(5) div div:nth-child(2) div:nth-child(2) table tbody tr td::text").get()),
+            'url': response.url
                               }
 
 
@@ -200,7 +212,8 @@ class EstacionamentosSpider(scrapy.Spider):
             'Diária_Coberta': limpa_RS(response.css('#comp-kb13cwxr > h2 > span:nth-child(2) > span > span > span::text').get()),
             'Diária_Descoberta': limpa_RS(response.css('#comp-kb13fvtl > h2 > span:nth-child(2) > span > span > span::text').get()),
             'Semana_Coberta': limpa_RS(response.css('#comp-kb13encv > h2 > span:nth-child(2) > span > span > span::text').get()),
-            'Semana_Descoberta': limpa_RS(response.css('#comp-kb13fvvo > h2 > span:nth-child(2) > span > span > span::text').get())
+            'Semana_Descoberta': limpa_RS(response.css('#comp-kb13fvvo > h2 > span:nth-child(2) > span > span > span::text').get()),
+            'url': response.url
 
             }
 
@@ -216,7 +229,8 @@ class EstacionamentosSpider(scrapy.Spider):
             'Diária_Descoberta': limpa_RS(response.css("body > div.page-builder > div > div > div.col-md-8 > div > blockquote:nth-child(2) > table > tbody > tr:nth-child(2) > td:nth-child(2)::text").get()),
             'Semana_Coberta': limpa_RS(response.css("body > div.page-builder > div > div > div.col-md-8 > div > blockquote:nth-child(2) > table > tbody > tr:nth-child(8) > td:nth-child(3)::text").get()),
             'Semana_Descoberta': limpa_RS(response.css("body > div.page-builder > div > div > div.col-md-8 > div > blockquote:nth-child(2) > table > tbody > tr:nth-child(8) > td:nth-child(2)::text").get()),
-            'Última_atualização': x.strftime("%d") + "/" + x.strftime("%m") + "/" + x.strftime("%Y")
+            'Última_atualização': x.strftime("%d") + "/" + x.strftime("%m") + "/" + x.strftime("%Y"),
+            'url': response.url
             }
 
        
@@ -235,6 +249,7 @@ class EstacionamentosSpider(scrapy.Spider):
        'Econômico': limpa_RS(response.xpath("//content/properties/ValorDiariaE/text()").get()),
        'Motocicletas': limpa_RS(response.xpath("//content/properties/ValorDiariaM/text()").get()),
        'Semana': limpa_RS(response.xpath("//content/properties/ValorPromoE7Dias/text()").get()),
+       'url': 'https://site.bh-airport.com.br/SitePages/pt/estacionamento/index.aspx'
        }
 
     def parse_result2(self, response):
@@ -259,7 +274,8 @@ class EstacionamentosSpider(scrapy.Spider):
        'logo': 'https://www.estapar.com.br/sites/default/files/logo-estapar-home-nova-estapar.png',
        'distância': '4 km',
        'Coberta': limpa_RS(coberta),
-       'Semana': limpa_RS(seletor['price']['reservaveis'][0]['produto']['preco'])
+       'Semana': limpa_RS(seletor['price']['reservaveis'][0]['produto']['preco']),
+       'url': 'https://www.estapar.com.br/reserva-de-vaga/datas?codigo=2203&pid=ChIJUyR0DhxjpgARgxl6ilLjsJw'
        }
 
         
